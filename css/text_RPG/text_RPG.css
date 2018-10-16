@@ -1,3 +1,8 @@
-.wrap{
-    background-color: darkgreen;
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#log span{
+    display: block;
 }
