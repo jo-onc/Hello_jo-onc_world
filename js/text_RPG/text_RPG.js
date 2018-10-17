@@ -81,7 +81,7 @@ Hero.prototype.attacked = function(damage) {
         } else {
             gameOver = true;
             printLogMsg("Game Over ... 현재 레벨: " + this.lev, "red");
-            alert("최종 레벨: " + this.lev);
+            alert("Game Over ... 현재 레벨: " + this.lev);
         }
     }
 }
