@@ -100,25 +100,25 @@ function makeRandom(num) {
 }
 function makeMonster() {
     var monsterArray = [
-        ['Ant', 20, 10, 1, 110],
-        ['Frog', 30, 20, 2, 110],
-        ['Rabbit', 40, 30, 3, 110],
-        ['Tiger', 150, 100, 4, 110],
-        ['Dragon(king)', 500, 150, 5, 110]
+        ['Ant', 20, 10, 1, 1100],
+        ['Frog', 30, 20, 2, 1100],
+        ['Rabbit', 40, 30, 3, 1100],
+        ['Tiger', 10, 10, 4, 1100],
+        ['Dragon(king)', 5, 10, 5, 1100]
     ];
     var monsters = monsterArray[makeRandom(5)];
     return new Monster(monsters[0], monsters[1], monsters[2], monsters[3], monsters[4]); 
 }
 // 히어로 생성 - name, hp, att, lev, xp
 var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 100, 10);
-printDefaultMsg("게임을 시작합니다. " + newHero.name + "은(는) 과연 얼마나 성장할까요?");
+printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!");
 var gameNow= {
-    sw: false,
+    sw: false, // 게임 진행 스위치. true 시 진행.
     start: function() {
         return this.sw = true;  
     }
 }
-// 플레이 버튼 클릭시 gameNow.sw = true
+// 플레이 버튼 클릭시 gameNow.sw = true && 게임 플레이
 var btnPlay = document.getElementById("paly");
 btnPlay.onclick = function() {
     gameNow.start();
@@ -126,18 +126,23 @@ btnPlay.onclick = function() {
 }
 // 게임 실행문
 function playGame() {
-    if(!gameOver) {
+    if(!gameOver) { // 게임오버가 아닐 때
         var newMonster = makeMonster();
         printLogMsg(newMonster.name + "을(를) 만났습니다!");
         battle = true;
         printLogMsg("전투모드!");
-        while(battle && gameNow.sw === true) {
-            newHero.attack(newMonster);
-            if(newMonster.hp > 0) {
-                newMonster.attack(newHero);
+        while(battle && gameNow.sw) { // 배틀 && 게임 스위치 true 일 때 진행
+            newHero.attack(newMonster); // 영웅이 몬스터를 공격
+            if(newMonster.hp > 0) { // 몬스터의 체력이 0보다 클시
+                newMonster.attack(newHero); // 몬스터가 영웅 공격
             } else {
-                gameNow.sw = false;
+                gameNow.sw = false; // 전투 종료 스위치
                 printLogMsg(newMonster.name + "과의 전투에서 승리! 전투 종료!");
+                if(newHero.lev >= 10) {
+                    gameOver = true;
+                    alert("케릭터 만렙 달성. 현재 레벨: " + newHero.lev + " 운이 좋군요. 오늘 하루는 운으로 가득할 것입니다.");
+                    printLogMsg("케릭터 만렙 달성. 현재 레벨: " + newHero.lev + " 운이 좋군요. 오늘 하루는 운으로 가득할 것입니다.", "gold");
+                }
             }
         }
     }
