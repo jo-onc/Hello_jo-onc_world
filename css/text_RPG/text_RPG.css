@@ -5,6 +5,11 @@
 .condition{
     margin-bottom: 50px;
 }
+#paly.on{
+    padding: 5px 10px;
+    background: pink;
+    color: blue;
+}
 #log{
     display: inline-block;
     width: 50%;
