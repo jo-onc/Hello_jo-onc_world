@@ -107,7 +107,7 @@ function makeMonster() {
         ['Tiger', 90, 100, 4, 110],
         ['hippo', 100, 120, 5, 150],
         ['Tirano', 120, 150, 6, 250],
-        ['Dragon(king)', 500, 150, 7, 400]
+        ['Dragon(king)', 500, 180, 7, 400]
     ];
     var monsters = monsterArray[makeRandom(7)];
     return new Monster(monsters[0], monsters[1], monsters[2], monsters[3], monsters[4]); 
@@ -138,6 +138,13 @@ btns.btnPlay.onclick = function() {
 // 히어로 생성 - name, hp, att, lev, xp
 var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 200, 20);
 printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!");
+// 플레이 상태 - 레벨
+var info = {
+    levTag: document.getElementById("nowLev"),
+    printLev: function() {
+        return this.levTag.innerHTML = newHero.lev
+    }
+}
 // 게임 실행문
 function playGame() {
     if(!gameOver) { // 게임오버가 아닐 때
@@ -154,10 +161,11 @@ function playGame() {
                 printLogMsg(newMonster.name + "과의 전투에서 승리! 전투 종료!");
                 if(newHero.lev >= 10) {
                     gameOver = true;
-                    alert("케릭터 만렙(lev. " + newHero.lev + ") 달성! \n " + newHero.name + "님! 운이 좋군요. 오늘 하루는 운으로 가득할 것입니다.");
-                    printLogMsg("케릭터 만렙 달성. 현재 레벨: " + newHero.lev + ". 운이 좋군요. 오늘 하루는 운으로 가득할 것입니다.", "gold");
+                    alert("케릭터 만렙(lev. " + newHero.lev + ") 달성! \n " + newHero.name + "님! 운이 좋군요. 오늘 하루는 행운으로 가득할 것입니다.");
+                    printLogMsg("케릭터 만렙(lev. " + newHero.lev + ") 달성! \n " + newHero.name + "님! 운이 좋군요. 오늘 하루는 행운으로 가득할 것입니다.", "gold");
                 }
             }
+            info.printLev(); // 현재 레벨 표시
         }
     }
 }

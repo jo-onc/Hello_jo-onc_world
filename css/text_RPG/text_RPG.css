@@ -2,8 +2,27 @@
     margin: 0;
     padding: 0;
 }
+li{
+    list-style: none;
+}
+.wrap{
+    width: 50%;
+    margin: 20px;
+}
 .condition{
     margin-bottom: 50px;
+    text-align: center;
+}
+#msgDefault{
+    margin-bottom: 10px;
+}
+.ulInfo{
+    display: inline-block;
+    text-align: left;
+}
+#paly{
+    padding: 5px;
+    margin-bottom: 20px;
 }
 #paly.on{
     padding: 5px 10px;
@@ -11,9 +30,8 @@
     color: blue;
 }
 #log{
-    display: inline-block;
-    width: 50%;
     max-height: 60vh;
+    padding: 10px;
     overflow-y: scroll;
     border: 1px solid #000;
 }
