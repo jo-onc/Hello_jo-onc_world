@@ -4,7 +4,7 @@ console.log("Start Text-RPG");
 var gameOver = false;
 var battle = false;
 var coin = 3;
-// 로그 메세지 출력. #log 태그에 로그 메세지 추가. color 값을 인자로 제공. 해당하는 색의 에러 메시지가 표시.
+// 로그 메세지 출력. 메세지 별 color 적용.
 function printLogMsg(msg, color) {
     this.color = color || "black";
     var logWrap = document.getElementById("log");
@@ -13,12 +13,13 @@ function printLogMsg(msg, color) {
     logList.style.color = color;
     logWrap.appendChild(logList);
 }
+// 기본 메세지
 function printDefaultMsg(msg, color){
     var msgDefault = document.getElementById("msgDefault");
     this.msg = msg;
     msgDefault.innerHTML = msg;
 }
-// 캐릭터 기본 세팅. 이름, 체력, 공격력
+// 캐릭터 기본 베이스. 이름, 체력, 공격력
 function Character(name, hp, att) {
     this.name = name;
     this.hp = hp;
@@ -37,7 +38,7 @@ Character.prototype.attacked = function(damage) {
         battle = false;
     }
 }
-// 영웅 생성 - basicCharacter 상속
+// 영웅 생성 - Character 상속
 function Hero(name, hp, att, lev, xp) {
     Character.apply(this, arguments);
     this.lev = lev || 1;
@@ -84,7 +85,7 @@ Hero.prototype.attacked = function(damage) {
         }
     }
 }
-// 몬스터 생성 - basicCharacter 상속 - name, hp, att, lev, xp
+// 몬스터 생성 - Character 상속 - name, hp, att, lev, xp
 function Monster(name, hp, att, lev, xp) {
     Character.apply(this, arguments);
     this.lev = lev || 1;
@@ -103,14 +104,14 @@ function makeMonster() {
         ['Frog', 30, 20, 2, 110],
         ['Rabbit', 40, 30, 3, 110],
         ['Tiger', 150, 100, 4, 110],
-        ['Dragon', 500, 150, 5, 110]
+        ['Dragon(king)', 500, 150, 5, 110]
     ];
     var monsters = monsterArray[makeRandom(5)];
     return new Monster(monsters[0], monsters[1], monsters[2], monsters[3], monsters[4]); 
 }
 // 히어로 생성 - name, hp, att, lev, xp
-var newHero = new Hero(window.prompt('영웅 이름을 입력하세요'), 100, 10);
-printDefaultMsg("게임을 시작합니다. " + newHero.name + "은(는) 얼마나 성장할 수 있을까요?");
+var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 100, 10);
+printDefaultMsg("게임을 시작합니다. " + newHero.name + "은(는) 과연 얼마나 성장할까요?");
 var gameNow= {
     sw: false,
     start: function() {
