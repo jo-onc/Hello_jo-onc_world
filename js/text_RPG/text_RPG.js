@@ -3,7 +3,12 @@ console.log("Start Text-RPG");
 // 게임 오버, 전투 중, 코인
 var gameOver = false;
 var battle = false;
-var coin = 3;
+var infoCoin = {
+    default: makeRandom(2) + 3,
+    getCoin: function() {
+        return this.default;
+    }
+}
 // 로그 메세지 출력. 메세지 별 color 적용.
 function printLogMsg(msg, color) {
     this.color = color || "black";
@@ -73,11 +78,12 @@ Hero.prototype.attacked = function(damage) {
     printLogMsg(this.name + "님이" + damage + "의 공격을 받아 체력이 " + this.hp + "이(가) 되었습니다.", "pink");
     if(this.hp <= 0){
         battle = false;
-        printLogMsg(this.name + "님이 전투 불가 상태입니다. 현재 코인: " + coin, "red");
-        if(coin > 0){            
-            coin --;
-            printLogMsg("코인을 사용해 부활합니다. 현재 코인: " + coin, "skyblue");
+        printLogMsg(this.name + "님이 전투 불가 상태입니다. 현재 코인: " + infoCoin.default, "red");
+        if(infoCoin.default > 0){            
+            infoCoin.default --;
+            printLogMsg("코인을 사용해 부활합니다. 현재 코인: " + infoCoin.default, "skyblue");
             battle = true;
+            info.printCoin(); // 현재 코인 표시
         } else {
             gameOver = true;
             printLogMsg("Game Over ... 현재 레벨: " + this.lev, "red");
@@ -105,8 +111,8 @@ function makeMonster() {
         ['Frog', 30, 10, 2, 70],
         ['Rabbit', 35, 15, 3, 90],
         ['Tiger', 90, 100, 4, 110],
-        ['hippo', 100, 120, 5, 150],
-        ['Tirano', 120, 150, 6, 250],
+        ['hippo', 100, 110, 5, 150],
+        ['Tirano', 180, 150, 6, 250],
         ['Dragon(king)', 500, 180, 7, 400]
     ];
     var monsters = monsterArray[makeRandom(7)];
@@ -137,14 +143,20 @@ btns.btnPlay.onclick = function() {
 }
 // 히어로 생성 - name, hp, att, lev, xp
 var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 200, 20);
-printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!");
 // 플레이 상태 - 레벨
 var info = {
     levTag: document.getElementById("nowLev"),
     printLev: function() {
         return this.levTag.innerHTML = newHero.lev
+    },
+    coinTag: document.getElementById("nowCoin"),
+    printCoin: function() {
+        return this.coinTag.innerHTML = infoCoin.default;
     }
 }
+infoCoin.getCoin(); // 코인 생성
+info.printCoin(); // 현재 코인 표시
+printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!");
 // 게임 실행문
 function playGame() {
     if(!gameOver) { // 게임오버가 아닐 때
