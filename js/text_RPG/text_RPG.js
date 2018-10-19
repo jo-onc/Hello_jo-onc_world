@@ -1,14 +1,31 @@
 console.log("Start Text-RPG");
 
-// 게임 오버, 전투 중, 코인
+// 게임 오버, 전투 중
 var gameOver = false;
 var battle = false;
-var infoCoin = {
-    default: makeRandom(2) + 3,
-    getCoin: function() {
-        return this.default;
+// 코인 만들기
+var makeCoin = function() {
+    var coin = makeRandom(2) + 3; // 코인 개수 랜덤 적용 3~4개 
+    function changeCoin(number) { // 코인 조작 함수
+        if(typeof number === "number") { // 매개변수가 숫자라면
+            coin += number; // 코인 값 조정
+        }
+    }
+    return {
+        decrease: function() { // 코인 감소
+            changeCoin(-1);
+        },
+        getCoin: function() { // 코인 반환
+            return coin;
+        },
+        print: function() { // 코인 출력
+            var coinTag = document.getElementById("nowCoin");
+            return coinTag.innerHTML = this.getCoin();
+        }
     }
 }
+// 코인 생성
+var newCoin = makeCoin();
 // 로그 메세지 출력. 메세지 별 color 적용.
 function printLogMsg(msg, color) {
     this.color = color || "black";
@@ -16,13 +33,14 @@ function printLogMsg(msg, color) {
     var logList = document.createElement("span");
     logList.innerHTML = msg;
     logList.style.color = color;
-    logWrap.appendChild(logList);
+    logWrap.appendChild(logList); // 실제 메세지 출력
 }
 // 기본 메세지
-function printDefaultMsg(msg, color){
-    var msgDefault = document.getElementById("msgDefault");
+function printDefaultMsg(msg, tags){
+    this.tags = tags;
     this.msg = msg;
-    msgDefault.innerHTML = msg;
+    var tag = document.getElementById(tags);
+    tag.innerHTML = msg;
 }
 // 캐릭터 기본 베이스. 이름, 체력, 공격력
 function Character(name, hp, att) {
@@ -51,7 +69,7 @@ function Hero(name, hp, att, lev, xp) {
 }
 Hero.prototype = Object.create(Character.prototype);
 Hero.prototype.constructor = Hero;
-// 공격
+// 영웅의 공격
 Hero.prototype.attack = function(target) {
     printLogMsg(this.name + "님이" + this.att + "의 데미지로 " + target.name + "을 공격합니다.", "blue");
     target.attacked(this.att);
@@ -61,7 +79,7 @@ Hero.prototype.attack = function(target) {
 }
 // xp 획득 및 레벨 업
 Hero.prototype.getXp = function(target) {
-    var maxXp = this.lev * 100 + 10;
+    var maxXp = this.lev * 100 + 10; // 레벨업을 위한 경험치 비교 기준
     this.xp += target.xp;
     printLogMsg(this.name + "님이 " + target.xp + "의 경험치를 획득하셨습니다.", "green");
     if(this.xp >= maxXp) {
@@ -70,6 +88,7 @@ Hero.prototype.getXp = function(target) {
         this.hp = this.lev * 200;
         this.att += 30;
         printLogMsg(this.name + "님이 레벨업을 하셨습니다. 현재 레벨: " + this.lev + " HP: " + this.hp + " ATT: " + this.att, "gold");
+        infoLev.print(); // 현재 레벨 표시
     }
 }
 // 공격 받음
@@ -78,12 +97,12 @@ Hero.prototype.attacked = function(damage) {
     printLogMsg(this.name + "님이" + damage + "의 공격을 받아 체력이 " + this.hp + "이(가) 되었습니다.", "pink");
     if(this.hp <= 0){
         battle = false;
-        printLogMsg(this.name + "님이 전투 불가 상태입니다. 현재 코인: " + infoCoin.default, "red");
-        if(infoCoin.default > 0){            
-            infoCoin.default --;
-            printLogMsg("코인을 사용해 부활합니다. 현재 코인: " + infoCoin.default, "skyblue");
+        printLogMsg(this.name + "님이 전투 불가 상태입니다. 현재 코인: " + newCoin.getCoin(), "red");
+        if(newCoin.getCoin() > 0){            
+            newCoin.decrease();
+            printLogMsg("코인을 사용해 부활합니다. 현재 코인: " + newCoin.getCoin(), "skyblue");
             battle = true;
-            info.printCoin(); // 현재 코인 표시
+            newCoin.print(); // 현재 코인 표시
         } else {
             gameOver = true;
             printLogMsg("Game Over ... 현재 레벨: " + this.lev, "red");
@@ -99,7 +118,7 @@ function Monster(name, hp, att, lev, xp) {
 }
 Monster.prototype = Object.create(Character.prototype);
 Monster.prototype.constructor = Monster;
-// 랜덤 생성 함수 - 몬스터 랜덤 생성에 사용
+// 난수 생성
 function makeRandom(num) {
     this.num = num;
     return Math.floor(Math.random() * num);
@@ -115,28 +134,28 @@ function makeMonster() {
         ['Tirano', 180, 150, 6, 250],
         ['Dragon(king)', 500, 180, 7, 400]
     ];
-    var monsters = monsterArray[makeRandom(7)];
-    return new Monster(monsters[0], monsters[1], monsters[2], monsters[3], monsters[4]); 
+    var monsterLength = monsterArray.length; // 몬스터 숫자 구하기
+    var monsters = monsterArray[makeRandom(monsterLength)]; // 몬스터 숫자만큼 난수 출력
+    return new Monster(monsters[0], monsters[1], monsters[2], monsters[3], monsters[4]); // 몬스터 name, hp, att, lev, xp
 }
-// 게임 진행 관련 정보
-var gameNow = {
-    sw: false, // 게임 진행 스위치. true 시 진행.
-    start: function() {
-        return this.sw = true;  
-    }
-}
-// 플레이 버튼 클릭시 gameNow.sw = true && 게임 플레이
+// 플레이 버튼 정보
 var btns = {
     btnPlay: document.getElementById("paly"),
-    btnTextSw: false
-}
-btns.btnPlay.onclick = function() {
-    gameNow.start(); // 게임 진행 스위치 true로 변경
-    playGame(); // 게임 플레이
-    if(!btns.btnTextSw) { // 게임 플레이 버튼 첫 클릭 후 버튼 정보 변경
-        btns.btnTextSw = true;
-        btns.btnPlay.classList.add("on");
+    btnTextSw: false, // 무한 반복 방지 스위치
+    changeText: function() {
         btns.btnPlay.innerHTML = "클릭시 다음 턴 진행";
+    },
+    addClass: function(isName) { // 클래스 추가, 편의상 구현
+        this.btnPlay.classList.add(isName);
+    }
+}
+ // 게임 플레이 버튼 첫 클릭 후 버튼 정보 변경
+btns.btnPlay.onclick = function() {
+    playGame(); // 게임 플레이
+    if(!btns.btnTextSw) {
+        btns.btnTextSw = true;
+        btns.addClass("on");
+        btns.changeText();
     } else if(gameOver) {
         alert("새로고침 F5키를 누른 후 새 게임을 진행해주세요. :)");
     }
@@ -144,19 +163,15 @@ btns.btnPlay.onclick = function() {
 // 히어로 생성 - name, hp, att, lev, xp
 var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 200, 20);
 // 플레이 상태 - 레벨
-var info = {
+var infoLev = {
     levTag: document.getElementById("nowLev"),
-    printLev: function() {
-        return this.levTag.innerHTML = newHero.lev
-    },
-    coinTag: document.getElementById("nowCoin"),
-    printCoin: function() {
-        return this.coinTag.innerHTML = infoCoin.default;
+    print: function() {
+        return this.levTag.innerHTML = newHero.lev;
     }
 }
-infoCoin.getCoin(); // 코인 생성
-info.printCoin(); // 현재 코인 표시
-printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!");
+infoLev.print(); // 현재 레벨 표시
+newCoin.print(); // 현재 코인 표시
+printDefaultMsg(newHero.name + "의 운빨 RPG. 시작!!!", "msgDefault");
 // 게임 실행문
 function playGame() {
     if(!gameOver) { // 게임오버가 아닐 때
@@ -164,12 +179,11 @@ function playGame() {
         printLogMsg(newMonster.name + "을(를) 만났습니다!");
         battle = true;
         printLogMsg("전투모드!");
-        while(battle && gameNow.sw) { // 배틀 && 게임 스위치 true 일 때 진행
+        while(battle) { // 배틀 && 게임 스위치 true 일 때 진행
             newHero.attack(newMonster); // 영웅이 몬스터를 공격
             if(newMonster.hp > 0) { // 몬스터의 체력이 0보다 클시
                 newMonster.attack(newHero); // 몬스터가 영웅 공격
             } else {
-                gameNow.sw = false; // 전투 종료 스위치
                 printLogMsg(newMonster.name + "과의 전투에서 승리! 전투 종료!");
                 if(newHero.lev >= 10) {
                     gameOver = true;
@@ -177,7 +191,6 @@ function playGame() {
                     printLogMsg("케릭터 만렙(lev. " + newHero.lev + ") 달성! \n " + newHero.name + "님! 운이 좋군요. 오늘 하루는 행운으로 가득할 것입니다.", "gold");
                 }
             }
-            info.printLev(); // 현재 레벨 표시
         }
     }
 }
