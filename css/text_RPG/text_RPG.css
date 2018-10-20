@@ -37,8 +37,8 @@ li{
     max-height: 60vh;
     padding: 10px;
     overflow-y: scroll;
-    border: 1px solid #000;
     scroll-behavior: smooth;
+    border: 1px solid #000;
 }
 #log span{
     display: block;
