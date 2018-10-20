@@ -140,7 +140,7 @@ function makeMonster() {
 }
 // 플레이 버튼 정보
 var btns = {
-    btnPlay: document.getElementById("paly"),
+    btnPlay: document.getElementById("play"),
     btnTextSw: false, // 무한 반복 방지 스위치
     changeText: function() {
         btns.btnPlay.innerHTML = "클릭시 다음 턴 진행";

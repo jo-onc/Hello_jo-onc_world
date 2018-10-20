@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
 }
+body{
+    font-size: 18px;
+}
 li{
     list-style: none;
 }
@@ -20,11 +23,12 @@ li{
     display: inline-block;
     text-align: left;
 }
-#paly{
+#play{
     padding: 10px;
     margin-bottom: 20px;
+    font-size: 1.5rem;
 }
-#paly.on{
+#play.on{
     background: pink;
     color: blue;
 }
