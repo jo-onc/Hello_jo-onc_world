@@ -33,9 +33,8 @@ li{
     color: blue;
 }
 #log{
-    width: calc(100% - 10%);
+    width: 100%;
     height: 30vh;
-    padding: 10px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     border: 1px solid #000;
