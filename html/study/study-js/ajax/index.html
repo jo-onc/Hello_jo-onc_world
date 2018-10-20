@@ -26,11 +26,12 @@
       <div class="code-box">
         <h3 class="title h3">main point</h3>
         <pre class="main-point">
+          var articleResult = document.getElementById("articleResult");
           fetch(fileName).then(function(response){
             response.text().then(function(text){
               return articleResult.innerHTML = text;
             });
-        })
+          })
         </pre>
       </div>
       <div class="code-box">
