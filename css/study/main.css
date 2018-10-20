@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.wrap{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 24px;
+    justify-content: center;
+}
+.wrap-title{
+    grid-column-start: 1;
+}
+.wrap-title li{
+    display: inline-block;
+    margin-bottom: 6px;
+}
+.wrap-title button{
+    padding: 6px;
+    font-size: 16px;
+}
+.wrap-view, .wrap-code{
+    grid-row-start: 2;
+    padding: 10px;
+    border: 1px solid #000;
+}
+.title{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.title.sub{
+    color: darkblue;
+}
+.title.h3{
+    color: red;
+}

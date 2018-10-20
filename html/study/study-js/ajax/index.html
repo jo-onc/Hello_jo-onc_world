@@ -5,16 +5,90 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Ajax</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../../../css/study/main.css">
 </head>
 <body>
-  <h1>Study - AJAX - fetch</h1>
-  <ol>
-    <li><button id="btnHtml">HTML</button></li>
-    <li><button id="btnCss">CSS</button></li>
-    <li><button id="btnJs">JAVASCRIPT</button></li>
-  </ol>
-  <h2>Result Area</h2>
-  <article id="articleResult"></article>
+  <div class="wrap">
+    <div class="wrap-title">
+      <h1 class="title h1">Study - AJAX - fetch</h1>
+      <ol>
+        <li><button id="btnHtml">Load HTML file</button></li>
+        <li><button id="btnCss">Load CSS file</button></li>
+        <li><button id="btnJs">Load JAVASCRIPT file</button></li>
+      </ol>
+    </div>
+    <div class="wrap-view">
+      <h2 class="title sub">Result Area</h2>
+      <article id="articleResult"></article>
+    </div>
+    <div class="wrap-code">
+      <h2 class="title sub">View Code</h2>
+      <div class="code-box">
+        <h3 class="title h3">main point</h3>
+        <pre class="main-point">
+          fetch(fileName).then(function(response){
+            response.text().then(function(text){
+              return articleResult.innerHTML = text;
+            });
+        })
+        </pre>
+      </div>
+      <div class="code-box">
+        <h3 class="title h3">Uses</h3>
+        <pre>
+            // file load
+            var load = {
+              // function fetch
+              loadFile: function(fileName) {
+                var articleResult = document.getElementById("articleResult");
+                fetch(fileName).then(function(response){
+                    if(response.status === '404') { // if Not found file 
+                      alert("Not Found 404 Error!")
+                    } else { // status 200 ok
+                      response.text().then(function(text){
+                        return articleResult.innerHTML = text;
+                      });
+                    }
+                })
+              },
+              html: function() {
+                this.loadFile('html.html');
+              },
+              css: function() {
+                this.loadFile('css.html');
+              },
+              js: function() {
+                this.loadFile('javascript.html');
+              }
+            }
+            var btn = {
+              click: function() {
+                var btns = document.getElementsByTagName("button");
+                var btnsLength = btns.length;
+                for(var i=0; i < btnsLength; i++){
+                  btns[i].onclick = function() {
+                    switch(this.id) {
+                      case "btnHtml" : 
+                        load.html();
+                        break;
+                      case "btnCss" : 
+                        load.css();
+                        break;
+                      case "btnJs" : 
+                        load.js();
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+            // start
+            btn.click();
+        </pre>
+      </div>
+    </div>
+  </div>
+
   <script>
     // file load
     var load = {
