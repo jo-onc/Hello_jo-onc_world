@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ajax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>Study - AJAX - fetch</h1>
+  <ol>
+    <li><button id="btnHtml">HTML</button></li>
+    <li><button id="btnCss">CSS</button></li>
+    <li><button id="btnJs">JAVASCRIPT</button></li>
+  </ol>
+  <h2>Result Area</h2>
+  <article id="articleResult"></article>
+  <script>
+    // file load
+    var load = {
+      // function fetch
+      loadFile: function(fileName) {
+        var articleResult = document.getElementById("articleResult");
+        fetch(fileName).then(function(response){
+            if(response.status === '404') { // if Not found file 
+              alert("Not Found 404 Error!")
+            } else { // status 200 ok
+              response.text().then(function(text){
+                return articleResult.innerHTML = text;
+              });
+            }
+        })
+      },
+      html: function() {
+        this.loadFile('html.html');
+      },
+      css: function() {
+        this.loadFile('css.html');
+      },
+      js: function() {
+        this.loadFile('javascript.html');
+      }
+    }
+    var btn = {
+      click: function() {
+        var btns = document.getElementsByTagName("button");
+        var btnsLength = btns.length;
+        for(var i=0; i < btnsLength; i++){
+          btns[i].onclick = function() {
+            switch(this.id) {
+              case "btnHtml" : 
+                load.html();
+                break;
+              case "btnCss" : 
+                load.css();
+                break;
+              case "btnJs" : 
+                load.js();
+                break;
+            }
+          }
+        }
+      }
+    }
+    // start
+    btn.click();
+  </script>
+</body>
+</html>
