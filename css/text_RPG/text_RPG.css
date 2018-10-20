@@ -6,7 +6,8 @@ li{
     list-style: none;
 }
 .wrap{
-    margin: 20px auto;
+    margin: 0 auto;
+    padding: 5%;
 }
 .condition{
     margin-bottom: 5%;
@@ -28,6 +29,7 @@ li{
     color: blue;
 }
 #log{
+    width: calc(100% - 10%);
     height: 30vh;
     padding: 10px;
     overflow-y: scroll;
