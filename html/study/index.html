@@ -13,13 +13,31 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello_jo-onc_world</title>
+    <title>Hello_Study_world</title>
+    <script type="text/javasript" src="../../js/common/common.js"></script>
+    <style>
+        .list-study li{
+            margin-bottom: 6px;
+        }
+        .set-date{
+            margin-left: 10px;
+        }
+        a{
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <h2>Hello, Study world!</h2>
     <strong>Javascript</strong>
-    <ul>
-        <li><a href="study-js/ajax/index.html">Ajax</a></li>
+    <ul class="list-study">
+        <li>
+            <a href="study-js/ajax/index.html" title="Ajax-Fetch" target="_blank">Ajax-Fetch</a>
+            <strong id="strong"> Caution: Does not support ie11</strong>
+            <span class="set-date">10/21/2018</span>
+        </li>
+        <li><a href="study-js/ajax(classic)/index.html" title="Ajax-Classical" target="_blank">Ajax-Classical</a></li>
     </ul>
 </body>
 </html>

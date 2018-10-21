@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ajax</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../../../css/study/main.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="wrap-title">
+      <h1 class="title h1">Study - AJAX - Claasical</h1>
+      <ol>
+        <li><button id="btnHtml" data-file-name="html">Load HTML file</button></li>
+        <li><button id="btnCss" data-file-name="css">Load CSS file</button></li>
+        <li><button id="btnJs" data-file-name="javascript">Load JAVASCRIPT file</button></li>
+      </ol>
+    </div>
+    <div class="wrap-view">
+      <h2 class="title sub">Result Area</h2>
+      <article id="articleResult"></article>
+    </div>
+    <div class="wrap-code">
+      <h2 class="title sub">View Code</h2>
+      <div class="code-box">
+        <h3 class="title h3">main point</h3>
+        <pre class="main-point">
+var httpRequest; // set httpRequest
+    httpRequest = new XMLHttpRequest();
+    if(!httpRequest) {
+      alert('Don`t loaded XMLHTTP!');
+      return false;
+    }
+    httpRequest.onreadystatechange = resultContent; // get load file info
+    httpRequest.open('GET', fileName);
+    httpRequest.send();
+  }
+}
+function resultContent() {
+  var resultArea = document.getElementById("resultArea"); // for result area
+  if (httpRequest.readyState === XMLHttpRequest.DONE) {
+    if (httpRequest.status === 200) { // 200 ok
+      resultArea.innerHTML = httpRequest.responseText;
+    } else { // 404 error
+      resultArea.innerHTML = 'Request Error! 404';
+    }
+  }
+}
+        </pre>
+      </div>
+      <div class="code-box">
+        <h3 class="title h3">Uses</h3>
+        <pre>
+(function() {
+  var httpRequest; // set httpRequest
+  var load = { // set load file info
+    loadFile: function(fileName) {
+      var fileType = ".html";
+      var fileName = fileName + fileType;
+      httpRequest = new XMLHttpRequest();
+      if(!httpRequest) {
+        alert('Don`t loaded XMLHTTP!');
+        return false;
+      }
+      httpRequest.onreadystatechange = resultContent; // get load file info
+      httpRequest.open('GET', fileName);
+      httpRequest.send();
+    }
+  }
+  function resultContent() {
+    var articleResult = document.getElementById("articleResult"); // for result area
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) { // 200 ok
+        articleResult.innerHTML = httpRequest.responseText;
+      } else { // 404 error
+        articleResult.innerHTML = 'Request Error! 404';
+      }
+    }
+  }
+  var btn = {
+    onclick: function() {
+      var btns = document.getElementsByTagName("button");
+      var btnLength = btns.length;
+      for(var i=0; i&lt;btnLength; i++) {
+        (function(j) { // add closure
+          var btnI = btns[j];
+          btnI.addEventListener("click", function() {
+            load.loadFile(this.dataset.fileName)
+          })
+        })(i);
+      }
+    }
+  }
+  btn.onclick();
+})();
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var httpRequest; // set httpRequest
+      var load = { // set load file info
+        loadFile: function(fileName) {
+          var fileType = ".html";
+          var fileName = fileName + fileType;
+          httpRequest = new XMLHttpRequest();
+          if(!httpRequest) {
+            alert('Don`t loaded XMLHTTP!');
+            return false;
+          }
+          httpRequest.onreadystatechange = resultContent; // get load file info
+          httpRequest.open('GET', fileName);
+          httpRequest.send();
+        }
+      }
+      function resultContent() {
+        var articleResult = document.getElementById("articleResult"); // for result area
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+          if (httpRequest.status === 200) { // 200 ok
+            articleResult.innerHTML = httpRequest.responseText;
+          } else { // 404 error
+            articleResult.innerHTML = 'Request Error! 404';
+          }
+        }
+      }
+      var btn = {
+        onclick: function() {
+          var btns = document.getElementsByTagName("button");
+          var btnLength = btns.length;
+          for(var i=0; i<btnLength; i++) {
+            (function(j) { // add closure
+              var btnI = btns[j];
+              btnI.addEventListener("click", function() {
+                load.loadFile(this.dataset.fileName)
+              })
+            })(i);
+          }
+        }
+      }
+      btn.onclick();
+    })();
+  </script>
+</body>
+</html>
