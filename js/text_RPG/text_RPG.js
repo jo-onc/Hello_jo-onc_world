@@ -1,5 +1,3 @@
-console.log("Start Text-RPG");
-
 // 게임 오버, 전투 중
 var gameOver = false;
 var battle = false;
