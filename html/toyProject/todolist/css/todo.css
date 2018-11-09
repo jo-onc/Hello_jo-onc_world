@@ -15,35 +15,47 @@
     width: 100%;
     padding: 8px 4px;
     font-weight: bold;
+    background: #eee;
+    border: 1px solid #c5c5c5;
 }
 
 @media (min-width: 1200px){
     .header{
         margin-bottom: 0;
     }
+    .form{
+        margin-bottom: 24px;
+    }
     .submit{
         width: initial;
+        padding: 16px 8px;
+        vertical-align: top;
+    }
+    .inputText{
+        margin-bottom: 0;
+        max-width: 400px;
     }
 }
 .inputText{
     width: calc(100% - 8px);
-    max-width: 300px;
     padding: 10px 4px;
-    border: 1px solid #000;
+    border: 1px solid #c5c5c5;
     margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #5e5e5e;
 }
 .todo-ul{
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
 }
 .todo-ul li{
-    cursor: pointer;
     margin-bottom: 2%;
     list-style: none;
 }
 .todo-ul li span{
+    max-width: 80%;
     display: inline-block;
-    width: 80%;
     margin-left: 6px;
     word-break: break-all;
 }

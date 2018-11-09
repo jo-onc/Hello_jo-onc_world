@@ -9,8 +9,7 @@ let toDoArr = []
 function setList(text){
     toDoObj = {
         id : toDoArr.length + 1,
-        text : text,
-        success : null
+        text : text
     }
     toDoArr.push(toDoObj);
     saveTodo()
