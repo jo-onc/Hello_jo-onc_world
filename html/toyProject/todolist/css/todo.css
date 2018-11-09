@@ -14,6 +14,7 @@
 .submit{
     width: 100%;
     padding: 8px 4px;
+    font-size: 1.2rem;
     font-weight: bold;
     background: #eee;
     border: 1px solid #c5c5c5;
@@ -30,6 +31,7 @@
         width: initial;
         padding: 16px 8px;
         vertical-align: top;
+        font-size: 1rem;
     }
     .inputText{
         margin-bottom: 0;
