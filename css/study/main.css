@@ -35,3 +35,6 @@
 .title.h3{
     color: red;
 }
+pre{
+    word-break: break-all;
+}

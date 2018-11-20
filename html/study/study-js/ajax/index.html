@@ -26,48 +26,48 @@
       <div class="code-box">
         <h3 class="title h3">main point</h3>
         <pre class="main-point">
-          // Must be connected to the server
-          fetch(fileName).then(function(response){ // fileName + "file type (ex - .html)"
-            response.text().then(function(text){
-              return document.getElementById("tag").innerHTML = text;
-            });
-          })
+// Must be connected to the server
+fetch(fileName).then(function(response){ // fileName + "file type (ex - .html)"
+  response.text().then(function(text){
+    return document.getElementById("tag").innerHTML = text;
+  });
+})
         </pre>
       </div>
       <div class="code-box">
         <h3 class="title h3">Uses</h3>
         <pre>
-          // file load
-          var load = {
-            // function fetch
-            loadFile: function(fileName) { // fileName is value of dataset ... See bottom
-              var articleResult = document.getElementById("articleResult");
-              var fileType = ".html";
-              fetch(fileName+fileType).then(function(response){
-                  if(response.status === 404) { // if Not found file 
-                    alert(fileName + fileType + " file is Not Found 404 Error!")
-                  } else { // status 200 ok
-                    response.text().then(function(text){
-                      return articleResult.innerHTML = text;
-                    });
-                  }
-              })
-            }
-          }
-          var btn = {
-            click: function() {
-              var btns = document.getElementsByTagName("button");
-              var btnsLength = btns.length;
-              for(var i=0; i < btnsLength; i++){
-                var btnsI = btns[i];
-                btnsI.onclick = function() {
-                  load.loadFile(this.dataset.fileName); // get and set value of dataset 
-                }
-              }
-            }
-          }
-          // button click function start
-          btn.click();
+// file load
+var load = {
+  // function fetch
+  loadFile: function(fileName) { // fileName is value of dataset ... See bottom
+    var articleResult = document.getElementById("articleResult");
+    var fileType = ".html";
+    fetch(fileName+fileType).then(function(response){
+        if(response.status === 404) { // if Not found file 
+          alert(fileName + fileType + " file is Not Found 404 Error!")
+        } else { // status 200 ok
+          response.text().then(function(text){
+            return articleResult.innerHTML = text;
+          });
+        }
+    })
+  }
+}
+var btn = {
+  click: function() {
+    var btns = document.getElementsByTagName("button");
+    var btnsLength = btns.length;
+    for(var i=0; i < btnsLength; i++){
+      var btnsI = btns[i];
+      btnsI.onclick = function() {
+        load.loadFile(this.dataset.fileName); // get and set value of dataset 
+      }
+    }
+  }
+}
+// button click function start
+btn.click();
         </pre>
       </div>
     </div>
