@@ -6,15 +6,15 @@
 }
 .wrap{
     display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 24px;
-    justify-content: center;
+    grid-gap: 10px;
+    padding: 20px;
 }
-.wrap-title{
-    grid-column-start: 1;
+@media screen and (min-width: 1200px) {
+  .wrap{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 .wrap-title li{
-    display: inline-block;
     margin-bottom: 6px;
 }
 .wrap-title button{
@@ -22,7 +22,6 @@
     font-size: 16px;
 }
 .wrap-view, .wrap-code{
-    grid-row-start: 2;
     padding: 10px;
     border: 1px solid #000;
 }
