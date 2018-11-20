@@ -12,9 +12,9 @@
     <div class="wrap-title">
       <h1 class="title h1">Study - AJAX - fetch</h1>
       <ol>
-        <li><button id="btnHtml">Load HTML file</button></li>
-        <li><button id="btnCss">Load CSS file</button></li>
-        <li><button id="btnJs">Load JAVASCRIPT file</button></li>
+        <li><button id="btnHtml" data-file-name="html">Load HTML file</button></li>
+        <li><button id="btnCss" data-file-name="css">Load CSS file</button></li>
+        <li><button id="btnJs" data-file-name="javascript">Load JAVASCRIPT file</button></li>
       </ol>
     </div>
     <div class="wrap-view">
@@ -26,10 +26,10 @@
       <div class="code-box">
         <h3 class="title h3">main point</h3>
         <pre class="main-point">
-          var articleResult = document.getElementById("articleResult");
-          fetch(fileName).then(function(response){
+          // Must be connected to the server
+          fetch(fileName).then(function(response){ // fileName + "file type (ex - .html)"
             response.text().then(function(text){
-              return articleResult.innerHTML = text;
+              return document.getElementById("tag").innerHTML = text;
             });
           })
         </pre>
@@ -37,54 +37,37 @@
       <div class="code-box">
         <h3 class="title h3">Uses</h3>
         <pre>
-            // file load
-            var load = {
-              // function fetch
-              loadFile: function(fileName) {
-                var articleResult = document.getElementById("articleResult");
-                fetch(fileName).then(function(response){
-                    if(response.status === '404') { // if Not found file 
-                      alert("Not Found 404 Error!")
-                    } else { // status 200 ok
-                      response.text().then(function(text){
-                        return articleResult.innerHTML = text;
-                      });
-                    }
-                })
-              },
-              html: function() {
-                this.loadFile('html.html');
-              },
-              css: function() {
-                this.loadFile('css.html');
-              },
-              js: function() {
-                this.loadFile('javascript.html');
-              }
-            }
-            var btn = {
-              click: function() {
-                var btns = document.getElementsByTagName("button");
-                var btnsLength = btns.length;
-                for(var i=0; i < btnsLength; i++){
-                  btns[i].onclick = function() {
-                    switch(this.id) {
-                      case "btnHtml" : 
-                        load.html();
-                        break;
-                      case "btnCss" : 
-                        load.css();
-                        break;
-                      case "btnJs" : 
-                        load.js();
-                        break;
-                    }
+          // file load
+          var load = {
+            // function fetch
+            loadFile: function(fileName) { // fileName is value of dataset ... See bottom
+              var articleResult = document.getElementById("articleResult");
+              var fileType = ".html";
+              fetch(fileName+fileType).then(function(response){
+                  if(response.status === 404) { // if Not found file 
+                    alert(fileName + fileType + " file is Not Found 404 Error!")
+                  } else { // status 200 ok
+                    response.text().then(function(text){
+                      return articleResult.innerHTML = text;
+                    });
                   }
+              })
+            }
+          }
+          var btn = {
+            click: function() {
+              var btns = document.getElementsByTagName("button");
+              var btnsLength = btns.length;
+              for(var i=0; i < btnsLength; i++){
+                var btnsI = btns[i];
+                btnsI.onclick = function() {
+                  load.loadFile(this.dataset.fileName); // get and set value of dataset 
                 }
               }
             }
-            // start
-            btn.click();
+          }
+          // button click function start
+          btn.click();
         </pre>
       </div>
     </div>
@@ -94,26 +77,18 @@
     // file load
     var load = {
       // function fetch
-      loadFile: function(fileName) {
+      loadFile: function(fileName) { // fileName is value of dataset ... See bottom
         var articleResult = document.getElementById("articleResult");
-        fetch(fileName).then(function(response){
-            if(response.status === '404') { // if Not found file 
-              alert("Not Found 404 Error!")
+        var fileType = ".html";
+        fetch(fileName+fileType).then(function(response){
+            if(response.status === 404) { // if Not found file 
+              alert(fileName + fileType + " file is Not Found 404 Error!")
             } else { // status 200 ok
               response.text().then(function(text){
                 return articleResult.innerHTML = text;
               });
             }
         })
-      },
-      html: function() {
-        this.loadFile('html.html');
-      },
-      css: function() {
-        this.loadFile('css.html');
-      },
-      js: function() {
-        this.loadFile('javascript.html');
       }
     }
     var btn = {
@@ -121,23 +96,14 @@
         var btns = document.getElementsByTagName("button");
         var btnsLength = btns.length;
         for(var i=0; i < btnsLength; i++){
-          btns[i].onclick = function() {
-            switch(this.id) {
-              case "btnHtml" : 
-                load.html();
-                break;
-              case "btnCss" : 
-                load.css();
-                break;
-              case "btnJs" : 
-                load.js();
-                break;
-            }
+          var btnsI = btns[i];
+          btnsI.onclick = function() {
+            load.loadFile(this.dataset.fileName); // get and set value of dataset 
           }
         }
       }
     }
-    // start
+    // button click function start
     btn.click();
   </script>
 </body>
