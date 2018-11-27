@@ -8,7 +8,7 @@ var TODO_LS = 'ToDo';
 
 var todoArr = []
 
-function CreateElem(elem, elemClass, data){ // fn_createElement
+function CreateElem(elem, elemClass, data){ 
     var data = null || data;
     var elem = document.createElement(elem); 
     elem.classList.add(elemClass);
@@ -26,9 +26,6 @@ String.prototype.isEmpty = function() {
     return (this.length === 0 || !this.trim());
 };
 
-//리스트 로드
-
-//setData
 function setData(data, checked){
     var checked = checked || false;
     var todoObj = {
@@ -53,7 +50,6 @@ function load(){
     input.focus();
 }
 
-//리스트 읽기
 function printData(todoData, todoId, todoChk){
     var li = new CreateElem('li', 'todo-li', null)
     li.setAttribute('id', todoId)
@@ -84,7 +80,6 @@ function printData(todoData, todoId, todoChk){
     setData(todoData, todoChk)
 }
 
-//리스트 입력
 function handleCreate(){
     var inputData = input.value;
     setData(inputData)
@@ -102,8 +97,6 @@ function handleCreate(){
     });
 })();
 
-
-//리스트 수정
 function handleUpdate(e){
     var target = e.target;
     var li = target.parentNode;
@@ -132,7 +125,6 @@ function handleUpdate(e){
     }
 }
 
-//리스트 체크
 function handleChk(e){
     var li = e.target.parentNode;
     var liId = li.getAttribute('id');
@@ -147,7 +139,6 @@ function handleChk(e){
     saveLS();
 }(this);
 
-//리스트 삭제
 function handleDelete(e){
     var liId = e.target.parentNode.getAttribute('id');
     var index = liId - 1;
