@@ -26,27 +26,17 @@
       <div class="code-box">
         <h3 class="title h3">main point</h3>
         <pre class="main-point">
-var httpRequest; // set httpRequest
-    httpRequest = new XMLHttpRequest();
-    if(!httpRequest) {
-      alert('Don`t loaded XMLHTTP!');
-      return false;
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'myservice');
+xhr.onload = function() {
+    if (xhr.status === 200) { // Request OK
+        alert('result : ' + xhr.responseText);
     }
-    httpRequest.onreadystatechange = resultContent; // get load file info
-    httpRequest.open('GET', fileName);
-    httpRequest.send();
-  }
-}
-function resultContent() {
-  var resultArea = document.getElementById("resultArea"); // for result area
-  if (httpRequest.readyState === XMLHttpRequest.DONE) {
-    if (httpRequest.status === 200) { // 200 ok
-      resultArea.innerHTML = httpRequest.responseText;
-    } else { // 404 error
-      resultArea.innerHTML = 'Request Error! 404';
+    else {
+        alert('Request Error! ' + xhr.status);
     }
-  }
-}
+};
+xhr.send();
         </pre>
       </div>
       <div class="code-box">
@@ -54,8 +44,7 @@ function resultContent() {
         <pre>
 (function() {
   var httpRequest; // set httpRequest
-  var load = { // set load file info
-    loadFile: function(fileName) {
+  var loadFile = function(fileName) {
       var fileType = ".html";
       var fileName = fileName + fileType;
       httpRequest = new XMLHttpRequest();
@@ -67,7 +56,7 @@ function resultContent() {
       httpRequest.open('GET', fileName);
       httpRequest.send();
     }
-  }
+
   function resultContent() {
     var articleResult = document.getElementById("articleResult"); // for result area
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -78,21 +67,19 @@ function resultContent() {
       }
     }
   }
-  var btn = {
-    onclick: function() {
+  var readFile = function() {
       var btns = document.getElementsByTagName("button");
       var btnLength = btns.length;
-      for(var i=0; i&lt;btnLength; i++) {
+      for(var i=0; i&gt;btnLength; i++) {
         (function(j) { // add closure
           var btnI = btns[j];
           btnI.addEventListener("click", function() {
-            load.loadFile(this.dataset.fileName)
+            loadFile(this.dataset.fileName)
           })
         })(i);
       }
     }
-  }
-  btn.onclick();
+    readFile();
 })();
         </pre>
       </div>
@@ -102,8 +89,7 @@ function resultContent() {
   <script>
     (function() {
       var httpRequest; // set httpRequest
-      var load = { // set load file info
-        loadFile: function(fileName) {
+      var loadFile = function(fileName) {
           var fileType = ".html";
           var fileName = fileName + fileType;
           httpRequest = new XMLHttpRequest();
@@ -115,7 +101,7 @@ function resultContent() {
           httpRequest.open('GET', fileName);
           httpRequest.send();
         }
-      }
+
       function resultContent() {
         var articleResult = document.getElementById("articleResult"); // for result area
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -126,21 +112,19 @@ function resultContent() {
           }
         }
       }
-      var btn = {
-        onclick: function() {
+      var readFile = function() {
           var btns = document.getElementsByTagName("button");
           var btnLength = btns.length;
           for(var i=0; i<btnLength; i++) {
-            (function(j) { // add closure
+            (function(j) { // closure
               var btnI = btns[j];
               btnI.addEventListener("click", function() {
-                load.loadFile(this.dataset.fileName)
+                loadFile(this.dataset.fileName)
               })
             })(i);
           }
         }
-      }
-      btn.onclick();
+        readFile();
     })();
   </script>
 </body>
