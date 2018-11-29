@@ -82,7 +82,7 @@ body{
     position: relative;
     margin: 14px;
     font-size: 1.4rem;
-    word-break: break-all;
+    word-break: break-word;
 }
 .todo-li[data-chk='checked']{
     text-decoration: line-through;

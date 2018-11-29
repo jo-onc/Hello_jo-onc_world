@@ -18,7 +18,7 @@ var makeCoin = function() {
         },
         print: function() { // 코인 출력
             var coinTag = document.getElementById("nowCoin");
-            return coinTag.innerHTML = this.getCoin();
+            coinTag.innerHTML = this.getCoin();
         }
     }
 }
@@ -26,7 +26,7 @@ var makeCoin = function() {
 var newCoin = makeCoin();
 // 로그 메세지 출력. 메세지 별 color 적용.
 function printLogMsg(msg, color) {
-    this.color = color || "black";
+    var color = color || "black";
     var logWrap = document.getElementById("log");
     var logList = document.createElement("span");
     logList.innerHTML = msg;
@@ -35,8 +35,8 @@ function printLogMsg(msg, color) {
 }
 // 기본 메세지
 function printDefaultMsg(msg, tags){
-    this.tags = tags;
-    this.msg = msg;
+    var tags = tags;
+    var msg = msg;
     var tag = document.getElementById(tags);
     tag.innerHTML = msg;
 }
@@ -145,13 +145,16 @@ var btns = {
     },
     addClass: function(isName) { // 클래스 추가, 편의상 구현
         this.btnPlay.classList.add(isName);
+    },
+    switching: function(){
+        btnTextSw = !btnTextSw;
     }
 }
  // 게임 플레이 버튼 첫 클릭 후 버튼 정보 변경
 btns.btnPlay.onclick = function() {
     playGame(); // 게임 플레이
     if(!btns.btnTextSw) {
-        btns.btnTextSw = true;
+        btns.switching();
         btns.addClass("on");
         btns.changeText();
     } else if(gameOver) {
@@ -164,7 +167,7 @@ var newHero = new Hero(window.prompt('영웅의 이름을 입력하세요'), 200
 var infoLev = {
     levTag: document.getElementById("nowLev"),
     print: function() {
-        return this.levTag.innerHTML = newHero.lev;
+        this.levTag.innerHTML = newHero.lev;
     }
 }
 infoLev.print(); // 현재 레벨 표시
