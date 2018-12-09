@@ -8,27 +8,39 @@
 </head>
 <body>
     <h1>쓰로틀링과 디바운싱</h1>
-    <h2>쓰로틀링</h2>
-    <p>
-        서버에 과한 부담을 주는 동작의 방지를 위해 시간 제한을 둠.
-    </p>
-    <span>예제 - console.log 확인</span>
-    <br>
-    <input type="text" id="inputThrow" placeholder="값을 연속적으로 입력해보세요.">
-
-    <h2>디바운싱</h2>
-    <p>
-        서버에 과한 부담을 주는 동작의 방지를 위해 여러 동작들을 그룹화 시켜 한 번만 호출.<br>
-        #그룹화 #시간제한 #한 번 호출
-    </p>
-    <span>예제 - console.log 확인</span>
-    <br>
-    <input type="text" id="inputDeb" placeholder="값을 연속적으로 입력해보세요.">
+    <div>
+        <h2>쓰로틀링</h2>
+        <p>
+            서버에 과한 부담을 주는 동작의 방지를 위해 시간 제한을 둠.
+        </p>
+        <span>예제 - console.log 확인</span>
+        <br>
+        <input type="text" id="inputThrow" placeholder="값을 연속적으로 입력해보세요.">
+    </div>
+    <div>
+        <h2>디바운싱</h2>
+        <p>
+            서버에 과한 부담을 주는 동작의 방지를 위해 여러 동작들을 그룹화 시켜 한 번만 호출.<br>
+            #그룹화 #시간제한 #한 번 호출
+        </p>
+        <span>예제 - console.log 확인</span>
+        <br>
+        <input type="text" id="inputDeb" placeholder="값을 연속적으로 입력해보세요.">
+    </div>
+    <div>
+        <h2>일반</h2>
+        <p>
+            위의 예제들과 비교해보세요.
+        </p>
+        <span>예제 - console.log 확인</span>
+        <br>
+        <input type="text" id="noraml" placeholder="값을 연속적으로 입력해보세요.">
+    </div>
     <script>
         (function(){ // 쓰로틀링 코드
             var throwttling;
             var timer = '300';
-            var input = document.getElementById('inputThrow');
+            var input = document.querySelector('#inputThrow');
             input.addEventListener('input', function (e) {
             if (!throwttling) {
                 throwttling = setTimeout(function() {
@@ -43,7 +55,7 @@
         (function(){ // 디바운싱 코드
             var debouncing;
             var timer = '300';
-            var input = document.getElementById('inputDeb');
+            var input = document.querySelector('#inputDeb');
             input.addEventListener('input', function(e){
                 if(debouncing){
                     clearTimeout(debouncing);
@@ -53,6 +65,13 @@
                 }, timer)
             })
         })();
+
+        (function(){
+            var input = document.querySelector("#noraml");
+            input.addEventListener('input', function(e){
+                console.log(e.target.value);
+            })
+        })()
     </script>
 </body>
 </html>
