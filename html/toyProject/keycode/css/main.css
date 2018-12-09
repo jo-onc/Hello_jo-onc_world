@@ -1,0 +1,52 @@
+@import './reset.css';
+*{
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(200deg , rgb(4, 43, 61), 50%, rgb(241, 192, 31));
+    height: 100vh;
+    font-size: 10px;
+}
+.wrap{
+    display: grid;
+    grid-template-columns: minmax(600px, auto);
+    grid-template-rows: 100px 34px;
+    grid-row-gap: 20px;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+header{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+h1{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+}
+form, input{
+    width: 100%;
+}
+input{
+    padding: 8px 4px;
+    font-size: 1.4rem;
+}
+section{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-column-gap: 20px;
+    justify-content: center;
+}
+section div{
+    text-align: center;
+}
+.output-wrap{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid #e5e5e5;
+    padding: 4px;
+    color: #fff;
+    font-weight: bold;
+}

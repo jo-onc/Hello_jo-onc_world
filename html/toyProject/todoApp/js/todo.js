@@ -23,7 +23,7 @@ function CreateElem(elem, elemClass, data){
 }
 
 String.prototype.isEmpty = function() {
-    return (this.length === 0 || !this.trim());
+    return (this.length === 0 || !this.trim()); // === this.trim().length === 0
 };
 
 function setData(data, checked){
